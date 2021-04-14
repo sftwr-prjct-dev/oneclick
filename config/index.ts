@@ -1,7 +1,7 @@
 export default {
     nodeURL: "https://api.s0.t.hmny.io",
     mnemonic: "",
-    oneclickContractAddress: "0xe3550388D6c84381B9B55f2b9a35A7649f609077",
+    oneclickContractAddress: "0x04CCe397176F2Dd4075a12Fe158f0135868aaFFb",
     forwarder: "0xc03868568E907d6Bfcc9624A555f51BdbE85eF27",
     owner: "0x381EdBbdac69dfa500373D4c389D04519a9FfdAF",
     

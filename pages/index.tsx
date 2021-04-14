@@ -8,7 +8,7 @@ const GSN = require('@opengsn/gsn')
 // const nodeURL = "https://api.s0.b.hmny.io"
 
 const paymasterAddress = '0x944Eef4A4D35502363CBEBc904f145B9C58909e2' // deployed paymaster address
-const oneClickContractAddress = "0xe3550388D6c84381B9B55f2b9a35A7649f609077"
+const oneClickContractAddress = "0x04CCe397176F2Dd4075a12Fe158f0135868aaFFb"
 const nodeURL = "https://api.s0.t.hmny.io"
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
     const [oneClickContract, setOneClickContract] = useState(null)
     const [account, setAccount] = useState("")
     const [clicks, setClicks] = useState([])
+    const [reload, setReload] = useState(0)
     useEffect(() => {
         (async () => {
             if(window.ethereum){
@@ -45,14 +46,14 @@ export default function Home() {
             const clicks = _clicks.map(click => ({clicker: click.args[0].toString(), clickIndex: click.args[1].toString(), blockNumber: click.blockNumber, txHash: click.transactionHash}))
             setClicks(clicks)
         })()
-    },[])
+    },[reload])
 
     const handleClick = async () => {
         if(gsnProvider){
-            console.log(gsnProvider)
             const gsnSigner = await gsnProvider.getSigner(account)
             const tx = await oneClickContract.connect(gsnSigner).click()
             console.log(tx.hash)
+            setReload(reload+1)
         }
         
     }
@@ -64,7 +65,7 @@ export default function Home() {
             <div className="w-full mt-20">
                 {
                     clicks.map(click => {
-                        return <div key={click.txHash}>Clicker: {click.clicker}, Click Index: {click.clickIndex}, Click block number: {click.blockNumber}</div>
+                        return <div className={click.clicker.toLowerCase()===account.toLowerCase()&&'text-gray-700'} key={click.txHash}>Clicker:{click.clicker}, Click Index: {click.clickIndex}, Click block number: {click.blockNumber}</div>
                     })
                 }
             </div>

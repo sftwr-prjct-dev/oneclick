@@ -10,7 +10,8 @@
     "build": "next build",
     "export": "next export && touch ./out/.nojekyll",
     "start": "next start",
-    "deploy": "npx gh-pages -d ./out -t true"
+    "deploy:app": "npx gh-pages -d ./out -t true",
+    "deploy": "npm run build && npm run export && npm run deploy:app"
   },
   "keywords": [],
   "author": "eltneg <yorewole@gmail.com> (https://eltneg.prjct.dev/)",

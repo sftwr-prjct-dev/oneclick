@@ -26,6 +26,6 @@ contract OneClick is BaseRelayRecipient {
         require(!hasClicked[_sender], "User has already clicked");
         hasClicked[_sender] = true;
         numberOfClicks++;
-        emit Click(msg.sender, numberOfClicks);
+        emit Click(_sender, numberOfClicks);
     }
 }
