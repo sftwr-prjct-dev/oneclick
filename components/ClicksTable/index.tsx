@@ -11,10 +11,10 @@ const processClicks = (clicks: Array<Click>, account) => {
     return (
         <tbody>
             {
-                clicks.map((click: Click) => {
+                clicks.map((click: Click, index: number) => {
                     return <tr key={click.clickIndex} className={styles.tr}>
-                        <td>{click.clickIndex}</td>
-                        <td><a href={`https://explorer.harmony.one/#/address/${click.txHash}`} target="_blank">{formatStr(click.clicker)}</a>{account === click.clicker && <span style={{ color: 'green', fontStyle:'italic', fontWeight: 'bold'}}>(you)</span>}</td>
+                        <td>{index+1}</td>
+                        <td><a href={`https://explorer.harmony.one/#/address/${click.txHash}`} target="_blank">{formatStr(click.clicker)}</a>{account === click.clicker && <span style={{ color: 'red', fontStyle:'italic', fontWeight: 'bold'}}> (you)</span>}</td>
                         <td><a href={`https://explorer.harmony.one/#/tx/${click.txHash}`} target="_blank">{formatStr(click.txHash)}</a></td>
                         <td>{click.blockNumber}</td>
                     </tr>
@@ -36,7 +36,7 @@ const ClicksTable = ({clicks, account }: {clicks: Array<Click>, account: string}
                 </tr>
             </thead>
             {
-                processClicks(clicks, account)
+                processClicks(clicks.reverse(), account)
             }
         </table>
     )

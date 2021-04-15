@@ -28,7 +28,7 @@ export default function Home() {
     }, [])
 
     const handleClick = async () => {
-        await OneClick.addClick({ setClicks })
+        await OneClick.addClick({ setClicks, toast })
     }
 
     const connect = () => {
@@ -41,13 +41,18 @@ export default function Home() {
                 <title>Harmony | OneClick</title>
                 <link rel="icon" href="https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png?alt=media" />
             </Head>
-            <div style={{padding: "1rem", textAlign: "center", marginBottom: "2rem"}}>
-            {
-                !connected ? <button className={styles.connectBtn} onClick={connect}>Connect</button> : <>
-                <p style={{textAlign: "center", fontSize: "larger" }}>Your address: {account}</p>
-                <button className={styles.connectBtn} onClick={handleClick}>Add Click</button>
-                </>
-            }
+            <div className={styles.connect}>
+                    <>
+                        {
+                            connected && <p style={{textAlign: "center", fontSize: "larger", marginBottom: '0.5rem' }}>Connected: {account}</p>
+                        }
+                        <div style={{ margin: '0 auto', width: '35%'}}>
+                        {
+                            connected ? <button className={styles.connectBtn} onClick={handleClick}>Add Click</button> :
+                            <button className={styles.connectBtn} onClick={connect}>Connect</button>
+                        }
+                        </div>
+                    </>
             </div>
            <main className={styles.main}>
             <ClicksTable clicks={clicks} account={account}/>

@@ -19,7 +19,7 @@
 }
 
 .table td:hover:not(:first-child) {
-  color: whitesmoke;
+  color: red;
 }
 
 .table td:first-child {

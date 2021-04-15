@@ -42,13 +42,11 @@ class OneClick {
           },
       }).init();
       this.provider = new ethers.providers.Web3Provider(__gsnProvider)
-      console.log( this.provider )
 
       this.signer = this.provider.getSigner(this.account)
 
-      console.log(this.signer)
       setConnected(true)
-      setAccount(this.account)
+      setAccount(ethers.utils.getAddress(this.account))
 
     }catch(e) {
       console.log(e)
@@ -56,13 +54,12 @@ class OneClick {
     
   }
 
-  async addClick({ setClicks }) {
+  async addClick({ setClicks, toast }) {
     try{
-      const tx = await this.OneClickContract.connect(this.signer).click()
-      console.log(tx.hash)
+      await this.OneClickContract.connect(this.signer).click()
       await this.reloadClicks({ setClicks })
     } catch(e) {
-      console.log(e)
+      toast(e.data.message)
     }
   }
 
@@ -72,21 +69,28 @@ class OneClick {
 
     const provider = new ethers.providers.Web3Provider(ethereum)
 
-    const { chainId } = await provider.getNetwork()
-
-    if(chainId !== this.harmonChainId) {
-      console.warn('Invalid chain Id detected')
-      return false
+    try {
+      const { chainId } = await provider.getNetwork()
+      if(chainId !== this.harmonChainId) {
+        console.warn('Invalid chain Id detected')
+        return false
+      }
+    } catch(e) {
+      console.log(e)
     }
     return true
   }
 
   async reloadClicks({ setClicks }) {
-    const filter = this.OneClickContract.filters.Click(null)
-    const latestBlock = await this.provider.getBlockNumber()
-    const _clicks = await this.OneClickContract.connect(this.provider).queryFilter(filter, latestBlock - 200_000)
-    const clicks = _clicks.map(click => ({clicker: click.args[0].toString(), clickIndex: click.args[1].toString(), blockNumber: click.blockNumber, txHash: click.transactionHash}))
-    setClicks(clicks)
+    try{
+      const filter = this.OneClickContract.filters.Click(null)
+      const latestBlock = await this.provider.getBlockNumber()
+      const _clicks = await this.OneClickContract.connect(this.provider).queryFilter(filter, latestBlock - 200_000)
+      const clicks = _clicks.map(click => ({clicker: click.args[0].toString(), clickIndex: click.args[1].toString(), blockNumber: click.blockNumber, txHash: click.transactionHash}))
+      setClicks(clicks)
+    }catch(e){
+      console.log(e)
+    }
   }
 
 }
