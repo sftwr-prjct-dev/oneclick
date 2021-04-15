@@ -17,6 +17,7 @@ export default function Home() {
     const [account, setAccount] = useState("")
     const [clicks, setClicks] = useState([])
     const [reload, setReload] = useState(0)
+    const [loadingEv, setLoadingEv] = useState(false)
     useEffect(() => {
         (async () => {
             if(window.ethereum){
@@ -36,42 +37,86 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
+        if(window.ethereum){
+            window.ethereum.on('accountsChanged', (accounts)=>{
+                if(accounts.length === 0){
+                    //
+                }else {
+                    if(accounts[0] !== account){
+                        setAccount(accounts[0])
+                    }
+                }
+            });
+        }
+    },[])
+
+    useEffect(() => {
+        
         const provider = new ethers.providers.JsonRpcProvider(nodeURL);
         (async () => {
-            const OneClickContract = new Contract(oneClickContractAddress, oneClickCompiled.abi)
-            setOneClickContract(OneClickContract)
-            const filter = OneClickContract.filters.Click(null)
-            const latestBlock = await provider.getBlockNumber()
-            const _clicks = await OneClickContract.connect(provider).queryFilter(filter, latestBlock - 200_000)
-            const clicks = _clicks.map(click => ({clicker: click.args[0].toString(), clickIndex: click.args[1].toString(), blockNumber: click.blockNumber, txHash: click.transactionHash}))
-            setClicks(clicks)
+            try {
+                setLoadingEv(true)
+                const OneClickContract = new Contract(oneClickContractAddress, oneClickCompiled.abi)
+                setOneClickContract(OneClickContract)
+                const filter = OneClickContract.filters.Click(null)
+                const latestBlock = await provider.getBlockNumber()
+                const _clicks = await OneClickContract.connect(provider).queryFilter(filter, latestBlock - 200_000)
+                const clicks = _clicks.map(click => ({clicker: click.args[0].toString(), clickIndex: click.args[1].toString(), blockNumber: click.blockNumber, txHash: click.transactionHash}))
+                setClicks(clicks.reverse())
+            } catch (error) {
+                // handle error
+            }finally{
+                setLoadingEv(false)
+            }            
         })()
     },[reload])
 
     const handleClick = async () => {
         if(gsnProvider){
-            const gsnSigner = await gsnProvider.getSigner(account)
-            const tx = await oneClickContract.connect(gsnSigner).click()
-            console.log(tx.hash)
-            setReload(reload+1)
+            try {
+                const gsnSigner = await gsnProvider.getSigner(account)
+                const tx = await oneClickContract.connect(gsnSigner).click()
+                console.log(tx.hash)
+            } catch (error) {
+                if(error.data){
+                    alert(error.data.message)
+                }else{
+                    alert(error.message)
+                }
+                // _reload--
+            }finally{
+                setReload(reload+1)
+            }
         }
         
     }
 
+    const isLoading = loadingEv && clicks.length === 0
+
     return (
-        <div className="w-full h-screen flex flex-wrap items-center justify-center">
-            <div className="w-full">Your address: {account}</div>
-            <button className="" onClick={handleClick}>Add Click</button>
-            <div className="w-full mt-20">
-                {
-                    clicks.map(click => {
-                        return <div className={click.clicker.toLowerCase()===account.toLowerCase()&&'text-gray-700'} key={click.txHash}>Clicker:{click.clicker}, Click Index: {click.clickIndex}, Click block number: {click.blockNumber}</div>
-                    })
-                }
-            </div>
-            
+        <div className="w-full h-screen md:flex flex-wrap items-center justify-center">
+            <div className="bg-blue-300 w-full md:w-500 h-full md:h-650 py-8 px-6 rounded-lg">
+                <div className="w-full text-white text-lg">Your address: {formatAddress(account)}</div>
+                <div className="w-full text-center mt-16">
+                    <button className=" w-64 bg-blue-600 text-gray-300 h-16 rounded-md outline-none focus:outline-none border-none" onClick={handleClick}>Add Click</button>
+                </div>
+                <div className={`w-full mt-16 h-350 overflow-y-scroll ${isLoading && "flex justify-center items-center"}`}>
+                    {
+                        isLoading
+                            ? <div className="w-full text-5xl text-center text-white">Loading ...</div>
+                            : (clicks).map(click => {
+                                return <div className={`py-2 leading-6 ${click.clicker.toLowerCase()===account.toLowerCase() ? 'text-gray-600' : 'text-gray-900'}`} key={click.txHash}>
+                                    Clicker: {formatAddress(click.clicker)}, Click Index: {click.clickIndex}, Click block number: {click.blockNumber}
+                                </div>
+                            })
+
+                    }
+                </div>
+            </div>            
         </div>
     )
 }
+
+const formatAddress = (address: string) => `${address.slice(0,7)}...${address.slice(address.length-7,address.length)}`
 
 
