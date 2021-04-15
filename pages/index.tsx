@@ -57,11 +57,8 @@ export default function Home() {
             <ClicksTable clicks={clicks} account={account}/>
         </main>
             <ToastContainer />
-            
         </div>
     )
 }
-
-const formatAddress = (address: string) => `${address.slice(0,7)}...${address.slice(address.length-7,address.length)}`
 
 
