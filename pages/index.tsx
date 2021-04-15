@@ -18,9 +18,8 @@ import ClicksTable from "../components/ClicksTable"
 
 export default function Home() {
     const [connected, setConnected] = useState(false)
-    const [account, setAccount] = useState("")
+    const [account, setAccount] = useState('')
     const [clicks, setClicks] = useState([])
-    const [reload, setReload] = useState(0)
 
 
     useEffect(()=> {
@@ -62,5 +61,7 @@ export default function Home() {
         </div>
     )
 }
+
+const formatAddress = (address: string) => `${address.slice(0,7)}...${address.slice(address.length-7,address.length)}`
 
 
