@@ -1,0 +1,27 @@
+.tr {
+  font-size: small;
+}
+
+.td {
+  margin-left: 5px;
+}
+
+.table {
+  margin: 0 auto; 
+  width: 80%;
+  padding-bottom: 1rem;
+}
+
+.table td {
+  text-align: center;
+  font-size: larger;
+  padding: 0.75rem;
+}
+
+.table td:hover:not(:first-child) {
+  color: whitesmoke;
+}
+
+.table td:first-child {
+  font-weight: bold;
+}

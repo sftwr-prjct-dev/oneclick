@@ -8,12 +8,23 @@
 }
 
 .main {
-  padding: 5rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
+  padding: 1.5rem;
+  max-height: 80vh;
+  overflow-y: scroll;
+  width: 70%;
+  background: linear-gradient(0deg, rgba(7,174,233, 0.3), rgba(7,174,233, 0.7));
+  border-radius: 2rem;
+}
+
+
+.connectBtn {
+  background-color: black;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 2rem;
+  outline: none;
+  border: none;
 }
 
 .footer {
@@ -112,6 +123,13 @@
 
 .logo {
   height: 1em;
+}
+
+.harmony {
+  background-image: url('https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png?alt=media');
+  width: 100vmax;
+  height: 100rem;
+  padding-top: 10rem;
 }
 
 @media (max-width: 600px) {
