@@ -45,7 +45,7 @@ export default function Home() {
                         {
                             connected && <p style={{textAlign: "center", fontSize: "larger", marginBottom: '0.5rem' }}>Connected: {account}</p>
                         }
-                        <div style={{ margin: '0 auto', width: '35%'}}>
+                        <div style={{ display: 'flex', justifyContent: 'center'}}>
                         {
                             connected ? <button className={styles.connectBtn} onClick={handleClick}>Add Click</button> :
                             <button className={styles.connectBtn} onClick={connect}>Connect</button>

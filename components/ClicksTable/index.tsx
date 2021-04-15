@@ -24,8 +24,9 @@ const processClicks = (clicks: Array<Click>, account) => {
     )
 }
 
-const ClicksTable = ({clicks, account }: {clicks: Array<Click>, account: string}) => {
-    return(
+const ClicksTable = ({ clicks, account }: {clicks: Array<Click>, account: string}) => {
+    return clicks.length > 0 ? (
+        
         <table className={styles.table}>
             <thead>
                 <tr>
@@ -39,6 +40,8 @@ const ClicksTable = ({clicks, account }: {clicks: Array<Click>, account: string}
                 processClicks(clicks.reverse(), account)
             }
         </table>
+    ) : (
+        <p style={{ textAlign: 'center', fontWeight: 'bolder', fontSize: '2rem' }}>Loading... </p>
     )
 }
 

@@ -31,8 +31,8 @@
   color: white;
   font-weight: 500;
   padding: 0.5rem 2rem;
+  border-radius: 0.2rem;
   outline: none;
-  width: 100%;
   border: none;
 }
 
