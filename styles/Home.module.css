@@ -7,6 +7,13 @@
   align-items: center;
 }
 
+.harmony {
+  background: url('https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png?alt=media');
+  width: 100vmax;
+  height: 100rem;
+  padding-top: 10rem;
+}
+
 .main {
   margin: 0 auto;
   padding: 1.5rem;
@@ -132,13 +139,6 @@
 
 .logo {
   height: 1em;
-}
-
-.harmony {
-  background-image: url('https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png?alt=media');
-  width: 100vmax;
-  height: 100rem;
-  padding-top: 10rem;
 }
 
 @media (max-width: 600px) {

@@ -43,9 +43,9 @@ export default function Home() {
             <div className={styles.connect}>
                     <>
                         {
-                            connected && <p style={{textAlign: "center", fontSize: "larger", marginBottom: '0.5rem' }}>Connected: {account}</p>
+                            connected && <p className="text-center text-sm mb-2 md:text-xl">Connected: {account}</p>
                         }
-                        <div style={{ display: 'flex', justifyContent: 'center'}}>
+                        <div className="flex justify-center">
                         {
                             connected ? <button className={styles.connectBtn} onClick={handleClick}>Add Click</button> :
                             <button className={styles.connectBtn} onClick={connect}>Connect</button>
