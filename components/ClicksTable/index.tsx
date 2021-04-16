@@ -6,8 +6,7 @@ type Click = { clicker: string, txHash: string; blockNumber: number; clickIndex:
 
 
 const formatStr = (str: string) => `${str.slice(0, 6)}...${str.slice(38, 43)}`
-// const formatStr = (str: string) => str
-const processClicks = (clicks: Array<Click>, account) => {
+const processClicks = (clicks: Array<Click>, account: string) => {
     return (
         <tbody>
             {
@@ -41,7 +40,7 @@ const ClicksTable = ({ clicks, account }: {clicks: Array<Click>, account: string
             }
         </table>
     ) : (
-        <p style={{ textAlign: 'center', fontWeight: 'bolder', fontSize: '2rem' }}>Loading... </p>
+        <p className="text-3xl text-center">Loading... </p>
     )
 }
 
