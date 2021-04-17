@@ -7,13 +7,40 @@
   align-items: center;
 }
 
+.harmony {
+  background: url('../assets/harmony\ logo_defaced.png');
+  width: 100vmax;
+  height: 100rem;
+  padding-top: 10rem;
+}
+
 .main {
-  padding: 5rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
+  padding: 1.5rem;
+  max-height: 80vh;
+  overflow-y: scroll;
+  width: 70%;
+  background: linear-gradient(0deg, rgba(7,174,233, 0.3), rgba(7,174,233, 0.7));
+  border-radius: 2rem;
+}
+
+.connect {
+  width: 70%;
+  margin: 1rem auto;
+  background: #31b0e8;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.connectBtn {
+  background-color: black;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 2rem;
+  border-radius: 0.2rem;
+  outline: none;
+  border: none;
 }
 
 .footer {
