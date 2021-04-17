@@ -12,7 +12,6 @@ export default function Home() {
     const [account, setAccount] = useState('')
     const [clicks, setClicks] = useState([])
 
-
     useEffect(()=> {
         OneClick.loadOneClick({ toast, setClicks })
     }, [])
@@ -23,6 +22,7 @@ export default function Home() {
 
     const connect = () => {
         OneClick.ConnectGSN({ toast, setConnected, setAccount })
+
     }
 
     return (
@@ -51,7 +51,5 @@ export default function Home() {
         </div>
     )
 }
-
-const formatAddress = (address: string) => `${address.slice(0,7)}...${address.slice(address.length-7,address.length)}`
 
 
